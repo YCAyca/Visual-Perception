@@ -28,7 +28,7 @@ function [P] = Obtain_Projection_Matrix(A)
     % Compute P from A using SVD
     [U,S,V] = svd(A'*A);
     
-    unknown_parameters = V(:,end);
+    unknown_parameters = V(:,end); % choose the smallest eigenvector
 
     P_transpoze = reshape(unknown_parameters, [4,3]);
     P = P_transpoze';
