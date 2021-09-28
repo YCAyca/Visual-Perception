@@ -5,7 +5,8 @@
 function DLT(World_PTS, GT_PTS, Calibration_Points_Count)
    A = Create_Matrix_A(Calibration_Points_Count, World_PTS, GT_PTS)
    P = Obtain_Projection_Matrix(A)
-   [Projected_X, Projected_Y] = Projection(P, World_PTS, GT_PTS);
+   [K,R,T] = QR_Decomposition(P)
+   [Projected_X, Projected_Y] = Projection(P, World_PTS, GT_PTS);   
 end
 
 function [A] = Create_Matrix_A(total_number_of_points, World_PTS, GT_PTS)
@@ -57,4 +58,19 @@ function [Projected_X, Projected_Y] = Projection(P, World_PTS, GT_PTS)
 
     scatter(Projected_X,Projected_Y);
     hold off
+end
+
+
+function [K,R,t] = QR_Decomposition(P)
+    H = P(:,1:3);
+    h = P(:,end);
+
+    [R_trans, K_inv] = qr(inv(H));
+
+    R = R_trans';
+    K = inv(K_inv);
+
+    % Calculating camera position center
+    C = -inv(H)*h
+    t = -R*C;
 end
