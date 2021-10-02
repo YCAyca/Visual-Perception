@@ -106,25 +106,6 @@ end
 
 average_error = (sum(error1,'all') + sum(error2,'all')) / 2 
 
-%% Epipolar lines between images
-
-figure
-title("First 5 points on first image and their correspondant epipolar lines and points on second image")
-scatter(PTS1(1:5,1), PTS1(1:5,2));
-xlim([0 600])
-ylim([0 450])
-hold on
-pts = lineToBorderPoints(Epipolar_Lines2, [512,512]);
-line(pts(1:5, [1,3])', pts(1:5, [2,4])');
-hold off
-
-figure
-pts = lineToBorderPoints(Epipolar_Lines1, [512,512]);
-scatter(PTS2(1:5,1), PTS2(1:5,2));
-hold on
-line(pts(1:5, [1,3])', pts(1:5, [2,4])');
-hold off
-
  %% Intersections of epipolar lines (epipoles)
 
 epipole1 = null(F_matrix')
